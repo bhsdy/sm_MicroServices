@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans        
+ http://www.springframework.org/schema/beans/spring-beans.xsd        
+ http://code.alibabatech.com/schema/dubbo         
+ http://code.alibabatech.com/schema/dubbo/dubbo.xsd"   default-lazy-init="false">
+	<!-- Application name -->
+	<dubbo:application  name="platform-industry-provider"  />
+	
+	<!-- 使用zookeeper注册中心暴露服务地址 -->
+    <dubbo:registry protocol="zookeeper" address="${spring.dubbo.registry.address}" />  
+    
+	<!-- 用dubbo协议在20880端口暴露服务 -->
+	<dubbo:protocol name="dubbo" port="20880"/>
+
+	<!-- 测试 -->
+	<dubbo:service interface="com.sm.service.CityService" ref="cityDubboService" timeout="4000" retries="0" version="1.0.0" />
+	<bean id="cityDubboService"  class="com.sm.service.impl.CityServiceImpl" />
+	<!-- 权限-->
+	<dubbo:service interface="com.sm.service.PermissionService" ref="permissionService" timeout="4000"  retries="0" version="1.0.0" />
+	<bean id="permissionService"  class="com.sm.service.impl.PermissionServiceImpl" />
+	
+</beans> 
